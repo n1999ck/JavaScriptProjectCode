@@ -219,8 +219,12 @@ It’s actually pretty rare for developers to use vanilla JavaScript for big pro
 
 Let’s get acquainted with some tools by making another web page, this time using some new tools. We will be using Node.js, npm, Axios, React, and the Metropolitan Museum API.
 
+Node.js is an engine for running JavaScript locally - that is, outside of the browser. Node Package Manager - npm - helps manage all the tools (packages) you install for your application.
+
+React is a library for creating user interfaces. We're using it today because it's relatively easy to get started with using create-react-app.
+
 1. Install Node.js, which includes npm, by following [this link](https://nodejs.org/en/download).
-2. Create a project folder named `ArtShow` and enter the directory.
+2. Create a project folder named `day3FirstSteps` and enter the directory.
 3. We'll start with a "Hello World." Create a file called `helloWorld.js`, then copy/paste the following code into it:
 
       ```jsx
@@ -252,15 +256,15 @@ Let’s get acquainted with some tools by making another web page, this time usi
 
 Now that we've gotten started with Node, let's go a little deeper by trying out npm.
 
-1. Navigate to your `ArtShow` folder and use the following command to start a React project:
-    ```npx create-react-app art-show```
+1. Use the following command to start a React project:
+    ```npx create-react-app day3artshow```
     With this command, we'll skip the details of getting a project going.
-2. When the previous command completes execution, navigate into `art-show` and use the following command to start the server:
+2. When the previous command completes execution, navigate into `day3artshow` and use the following command to start the server:
     ```npm start```
 3. In your browser, navigate to <http://localhost:3000>. You should see the following:
     ![Create React App starter page](img/screenshot9.png)
 4. The page suggests that you edit `App.js`. Let's do just that. Open `src/App.js` in your choice of IDE.
-5. `App.js` is using an interesting mix of JavaScript and HTML called JSX. This means you can essentially write HTML right in your JavaScript files. Change the contents of the `<p>` element and reload the page; you'll see your changes.
+5. `App.js` is written using an interesting mix of JavaScript and HTML called JSX. This means you can essentially write HTML right in your JavaScript files. Change the contents of the `<p>` element and reload the page; you'll see your changes.
 6. `App.js` is an example of a React component. React components are small bits of code that each provide some function on a web page. React apps are built by combining components. Let's create a new component now.
 7. Create a file called `Display.js` and paste in the following boilerplate code:
    
@@ -274,3 +278,4 @@ Now that we've gotten started with Node, let's go a little deeper by trying out 
 9.  For API calls, we'll be using Axios. Axios is a library that simplifies API calls. First, hit CTRL-C to stop the npm process, then use the following command to install Axios:
     `npm install axios`
 10. Before we use Axios to call an API endpoint, we need to decide what endpoint to use. We will be using the API's search function to ensure that our art pieces have images, so we can also select for art we want to see. Store your favorite artist's name or a subject of interest as a string in a variable named `query`.
+11. Now we can call the API.
