@@ -1,57 +1,20 @@
 import axios from "axios";
-import {useState} from "react";
+import { useEffect, useState } from "react";
 
 function Display(props) {
-    const [image, setImage] = useState(null)
-    const [searchUrl, setSearchUrl] = useState(null)
-    const [artIdList, setArtIdList] = useState([])
+    console.log(props)
 
-    function getArtList(query) {
-        setSearchUrl(`https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=${query}`)
-        try {
-            axios.get(searchUrl)
-            .then((response) => {
-            setArtIdList(response.data.objectIDs)
-            const randomArtURL = getRandomArtURL(response.data)
-            getArtPiece(randomArtURL)
-        });
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    function getRandomArtURL() {
-        var n = Math.floor(Math.random() * artIdList.total)
-        console.log(n)
-        console.log(artIdList.objectIDs[n])
-        return `https://collectionapi.metmuseum.org/public/collection/v1/objects/${artIdList.objectIDs[n]}`
-    }
-
-    function getArtPiece(randomArtURL) {
-        if (artIdList.length === 0) {
-            getArtList("dog");
-            getRandomArtURL();
-        } else {
-            getRandomArtURL();
-        }
-        try {
-            axios.get(randomArtURL)
-            .then((response) => {
-            console.log(response.data)
-            setImage(response.data.primaryImage)
-        });
-        } catch (error) {
-            console.log(error)
-        }
-    }    
-
-  return (
-    <div className="container">
-    <img src={image} alt="art" className="img-fluid h-50 d-inline-block"/>
-    <p></p>
-    <button onClick={() => getArtPiece("dog")}>Next Piece</button>
-    </div>
-  );
+    return (
+        <div className="container vh-100">
+            <img src={props.art.primaryImage} alt="art" className="img-fluid h-75 d-inline-block" />
+            <div>
+                <p>Artist: {props.art.artistDisplayName}</p>
+                <p>Title: {props.art.title}</p>
+                <p>Date: {props.art.objectDate}</p>
+                <p>Medium: {props.art.medium}</p>
+            </div>
+        </div>
+    );
 }
 
 export default Display;

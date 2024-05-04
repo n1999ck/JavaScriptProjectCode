@@ -266,16 +266,74 @@ Now that we've gotten started with Node, let's go a little deeper by trying out 
 4. The page suggests that you edit `App.js`. Let's do just that. Open `src/App.js` in your choice of IDE.
 5. `App.js` is written using an interesting mix of JavaScript and HTML called JSX. This means you can essentially write HTML right in your JavaScript files. Change the contents of the `<p>` element and reload the page; you'll see your changes.
 6. `App.js` is an example of a React component. React components are small bits of code that each provide some function on a web page. React apps are built by combining components. Let's create a new component now.
-7. Create a file called `Display.js` and paste in the following boilerplate code:
-   
+7. Create a file called `Retriever.js` and paste in the following boilerplate code:
+
    ```jsx
-   function Display() {
-     
+
+  import axios from "axios";
+  import { useEffect, useState } from "react";
+  import Display from "./Display";
+
+   function Retriever() {
+    // React stuff. Sets a variable and an assignment function at once
+    const [artPiece, setArtPiece] = useState({});
+
+    //React stuff. Calls a function when the page loads
+    useEffect(() => {
+        getArtList("dog");
+    }, []);
+
+    // Search URL ready for an API call
+   
+    function getArtList(query) {
+    const searchUrl = `https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=${query}`;
+    
     }
-   export default Display;
+
+    function getRandomArt(data) {
+      const n = Math.floor(Math.random() * data.total);
+      const url = `https://collectionapi.metmuseum.org/public/collection/v1/objects/${data.objectIDs[n]}`;
+
+    }
+
+    return (
+      //Here we're creating the component as it'll look on the webpage.
+      <div className="container-fluid">
+            <div className="row">
+                <div className="col-8">
+                    <Display art={artPiece} />
+                </div>
+                <div className="col-4">
+                    <button onClick={() => getArtList("dog")}>Next Piece</button>
+                </div>
+            </div>
+        </div>
+    );
+    }
+   export default Retriever;
    ```
+
 8. Now you have the basis of a React component. But this code isn't going to do anything on its own. We're going to be making a virtual art gallery using the Metropolitan Museum's free API. Web APIs like this return a JSON of data when called that we can work with. 
 9.  For API calls, we'll be using Axios. Axios is a library that simplifies API calls. First, hit CTRL-C to stop the npm process, then use the following command to install Axios:
     `npm install axios`
 10. Before we use Axios to call an API endpoint, we need to decide what endpoint to use. We will be using the API's search function to ensure that our art pieces have images, so we can also select for art we want to see. Store your favorite artist's name or a subject of interest as a string in a variable named `query`.
-11. Now we can call the API.
+11. Now take a look at the `getArtList` function. It'll call the Met's API, get a list of pieces with photos related to the query, and return a JSON with the number of matches and a list of their object IDs. To do that, we'll need a `try/catch` block. Within the try, use axios's `get()` and `then()` functions to get searchURL then call `getRandomArt` on response.data.
+12. In `getRandomArt`, use another `try/catch` and axios `get/then` to get url. With your response, call `setArtPiece(response.data)` and React will do the rest.
+13. In the same folder as `Retriever.js`, create a new file called `Display.js`. Paste in the following boilerplate code:
+
+```jsx
+function Display(props) {
+  console.log(props)
+  return (
+       <div className="container vh-100">
+            <img src={props.art.primaryImage} alt="art" className="img-fluid h-75 d-inline-block" />
+            <p></p>
+        </div>
+    );
+}
+
+export default Display;
+```
+
+14. This is a simple component that introduces the concept of React props. Props are really just dressed-up function arguments. Here, we'll be passing in an art object from `Retriever`. In the image element we passed {props.art.primaryImage} to get the `primaryImage` field from the `art` object from `props`. Use the console logged information to put other information about the art in the paragraph element.
+15. Run the app using `npm start` to test it out. You should see a picture of some dog-related artwork when the page loads, with the relevant information from step 14 below. Click the 'Next Piece' button and another piece of dog art will appear.
