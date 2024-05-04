@@ -6,7 +6,7 @@ function Display(props) {
 
     return (
         <div className="container vh-100">
-            <img src={props.art.primaryImage} alt="art" className="img-fluid h-75 d-inline-block" />
+            <img src={props.art.primaryImage} alt={props.art.title} className="img-fluid h-75 d-inline-block" />
             <div>
                 <p>Artist: {props.art.artistDisplayName}</p>
                 <p>Title: {props.art.title}</p>

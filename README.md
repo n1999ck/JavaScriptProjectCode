@@ -1,4 +1,9 @@
-# Projects
+# Project: Tutorial and Art Gallery
+## Nick Miller
+
+Written in JavaScript using Node.js/npm.
+Organization: Code in folders day1Basics, day2Books, and day3FirstSteps are from me. Folder day3artshow was created with create-react-app. day3artshow/src/Display.js and Retriever.js were written by me.
+Issues in development included time constraints, API confusion, and React confusion.
 
 ## Day 1: The Basics
 
